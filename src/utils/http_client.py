@@ -9,8 +9,6 @@ import threading
 from typing import Any, Dict, Optional, Callable
 
 import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 
 from .config import config
 from .logger import get_logger

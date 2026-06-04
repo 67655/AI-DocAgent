@@ -90,6 +90,18 @@ class MD5Deduplicator:
             self._fingerprint_records[fingerprint] = doc_id
         return False
 
+    def has_fingerprint(self, fingerprint: str) -> bool:
+        """
+        检查指定指纹是否已存在（不注册）
+
+        Args:
+            fingerprint: MD5指纹
+
+        Returns:
+            是否已存在
+        """
+        return fingerprint in self._global_fingerprints
+
     def register_fingerprint(self, fingerprint: str, doc_id: Optional[str] = None):
         """
         手动注册一个已知指纹到去重库

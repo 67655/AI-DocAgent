@@ -39,7 +39,7 @@ class DedupValidator:
         fingerprint = self.deduplicator.compute_md5(content)
         existing_doc = self.deduplicator.get_doc_id(fingerprint)
 
-        is_dup = fingerprint in set(self.deduplicator._global_fingerprints)
+        is_dup = self.deduplicator.has_fingerprint(fingerprint)
 
         result = {
             "is_duplicate": is_dup,

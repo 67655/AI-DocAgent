@@ -3,6 +3,8 @@
 纯文本文档解析器
 支持 TXT / Markdown / JSON / JSONL 等纯文本格式
 """
+from typing import Optional
+
 from .base_parser import BaseParser, ParseResult
 from ..utils.logger import get_logger
 
@@ -75,7 +77,7 @@ class TXTParser(BaseParser):
         )
 
     @staticmethod
-    def _read_file(file_path: str, primary_encoding: str = "utf-8") -> str | None:
+    def _read_file(file_path: str, primary_encoding: str = "utf-8") -> Optional[str]:
         """
         读取文件内容，自动尝试多种编码
 
