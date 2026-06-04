@@ -9,12 +9,16 @@ import json
 import os
 import sys
 
+# 强制UTF-8输出（兼容Windows GBK终端）
+if sys.stdout.encoding and sys.stdout.encoding.upper() != 'UTF-8':
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+
 # 确保项目根目录在 path 中
 _PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _PROJECT_ROOT)
 
 print("=" * 70)
-print("  AI-DocAgent v0.1.0 — 端到端演示")
+print("  AI-DocAgent v0.1.0 -- 端到端演示")
 print("=" * 70)
 
 # 确定测试文件
@@ -28,8 +32,8 @@ if not os.path.exists(test_file):
     print(f"用法: python demo.py <文档路径>")
     sys.exit(1)
 
-print(f"\n📄 测试文档: {test_file}")
-print(f"📏 文件大小: {os.path.getsize(test_file):,} bytes")
+print(f"\n[INFO] 测试文档: {test_file}")
+print(f"[INFO] 文件大小: {os.path.getsize(test_file):,} bytes")
 print()
 
 # ============================
@@ -40,11 +44,11 @@ from src.parser import parser_factory
 
 parse_result = parser_factory.parse(test_file)
 if not parse_result.success:
-    print(f"  ❌ 解析失败: {parse_result.error}")
+    print(f"  [FAIL] 解析失败: {parse_result.error}")
     sys.exit(1)
 
 text = parse_result.get_full_text()
-print(f"  ✅ 解析成功")
+print(f"  [OK] 解析成功")
 print(f"     - 文本长度: {len(text):,} 字符")
 print(f"     - 段落数量: {len(parse_result.paragraphs)}")
 print(f"     - 表格数量: {len(parse_result.tables)}")
@@ -60,7 +64,6 @@ print()
 # ============================
 print("[Step 2/4] LLM信息抽取 (Mock离线模式)...")
 
-# 使用Mock抽取器
 import re
 from src.utils.md5_utils import deduplicator
 
@@ -97,7 +100,7 @@ extract_result = {
     "content_md5": deduplicator.compute_md5(text),
 }
 
-print(f"  ✅ Mock抽取完成")
+print(f"  [OK] Mock抽取完成")
 print(f"     - 提取关键词: {keywords[:8]}")
 print(f"     - 提取邮箱: {emails[:3]}")
 print(f"     - 提取电话: {phones[:2]}")
@@ -122,7 +125,7 @@ output_path = os.path.join(output_dir, "demo_result.json")
 with open(output_path, "w", encoding="utf-8") as f:
     f.write(json_str)
 
-print(f"  ✅ 转换完成")
+print(f"  [OK] 转换完成")
 print(f"     - 输出文件: {output_path}")
 print(f"     - Schema字段: {list(standardized.keys())}")
 print()
@@ -138,7 +141,7 @@ quality_validator.rule_validator.add_required_rule("doc_id")
 quality_validator.rule_validator.add_required_rule("title")
 
 report = quality_validator.validate(standardized, doc_id="resume")
-status = "✅ PASS" if report["pass"] else "⚠️ FAIL"
+status = "[PASS]" if report["pass"] else "[FAIL]"
 
 print(f"  {status}")
 print(f"     - 校验详情: {report['rule_results']}")
@@ -152,15 +155,14 @@ if report.get("dedup_result"):
 # ============================
 print()
 print("=" * 70)
-print("  🎉 全流程演示完成！")
+print("  全流程演示完成!")
 print("=" * 70)
-print(f"\n📋 最终输出文件: {output_path}")
-print(f"\n📊 输出内容预览:")
+print(f"\n[OUTPUT] 最终输出文件: {output_path}")
+print(f"\n[PREVIEW] 输出内容预览:")
 print(json.dumps(standardized, ensure_ascii=False, indent=2)[:2000])
 print()
 
-# 显示统计
-print(f"📈 处理统计:")
+print(f"[STATS] 处理统计:")
 print(f"   输入文件大小: {os.path.getsize(test_file):,} bytes")
 print(f"   提取文本量: {len(text):,} 字符")
 print(f"   段落数: {len(parse_result.paragraphs)}")
