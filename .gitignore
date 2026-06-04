@@ -1,0 +1,106 @@
+# ============================
+# Python 项目标准忽略项
+# ============================
+
+# 字节码
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 虚拟环境
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 分发/打包
+*.egg-info/
+dist/
+build/
+*.egg
+*.whl
+
+# 单元测试/覆盖率报告
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# ============================
+# 环境变量 & 敏感信息
+# ============================
+.env
+.env.*
+!.env.example
+
+# ============================
+# 日志文件
+# ============================
+logs/
+*.log
+
+# ============================
+# 任务状态文件（运行时常驻）
+# ============================
+status/
+*.status.json
+task_runtime_status.json
+
+# ============================
+# IDE / 编辑器
+# ============================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# ============================
+# macOS / Linux / Windows 系统文件
+# ============================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ============================
+# 临时文件
+# ============================
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+
+# ============================
+# 数据 & 数据库
+# ============================
+*.db
+*.sqlite3
+data/
+
+# ============================
+# Jupyter Notebook
+# ============================
+.ipynb_checkpoints/
+
+# ============================
+# Mypy
+# ============================
+.mypy_cache/
+.dmypy.json
+dmypy.json
